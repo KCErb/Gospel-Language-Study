@@ -1,0 +1,30 @@
+target-version = "py39"
+line-length = 100
+src = ["src", "tests"]
+
+[lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG",    # flake8-unused-arguments
+    "SIM",    # flake8-simplify
+    "TCH",    # flake8-type-checking
+    "PTH",    # flake8-use-pathlib
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "B008",   # function call in default argument (needed for FastAPI Depends)
+]
+
+[lint.isort]
+known-first-party = ["gls"]
+
+[lint.per-file-ignores]
+"tests/**/*.py" = ["ARG001"]  # Unused arguments OK in tests (fixtures)
+"src/gls/api/**/*.py" = ["TC001"]  # FastAPI needs runtime imports for DI
+"src/gls/infrastructure/**/*.py" = ["TC003"]  # Runtime type usage for storage
